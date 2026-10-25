@@ -1,0 +1,61 @@
+# -----------------------------
+# Environment & Security
+# -----------------------------
+.env
+.env.local
+.env.*
+!.env.example
+
+# -----------------------------
+# AgentGuard Backend (Python/FastAPI)
+# -----------------------------
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Databases (Tumhari local test DBs push nahi honi chahiye)
+*.db
+*.sqlite3
+agentguard_app.db
+agentguard_audit.db
+
+# Backup & Temp Files (Editor ya script se generate hui)
+*.backup
+database.py.backup
+main.py.backup
+
+# -----------------------------
+# AgentGuard Frontend (Next.js/Node)
+# -----------------------------
+node_modules/
+.next/
+out/
+build/
+
+# TypeScript build logs
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# NPM/Yarn/PNPM Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# -----------------------------
+# OS & Editor Files
+# -----------------------------
+.vscode/
+.DS_Store
+Thumbs.db
+
+
+# Python Testing Caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+
+# Next.js / Vercel
+.vercel/
