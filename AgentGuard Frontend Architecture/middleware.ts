@@ -5,7 +5,12 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("agentguard_auth_token")?.value;
 
-  const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/signup");
+  const isAuthRoute =
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/signup") ||
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/forgot-password") ||
+    pathname.startsWith("/reset-password");
   const isApiAuthRoute = pathname.startsWith("/api/auth");
 
   // Allow public API auth routes
@@ -24,7 +29,7 @@ export function middleware(request: NextRequest) {
   }
 
   // 2. Prevent authenticated users from accessing /login or /signup
-  if (token && isAuthRoute) {
+  if (token && (pathname.startsWith("/login") || pathname.startsWith("/signup"))) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
