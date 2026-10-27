@@ -22,6 +22,12 @@ export interface AuthState {
     role?: string;
   }) => Promise<boolean>;
   loginWithOAuth: (provider: "github" | "google") => Promise<boolean>;
+  requestPasswordReset: (email: string) => Promise<{ status: string; message: string }>;
+  confirmPasswordReset: (data: {
+    email: string;
+    otp: string;
+    newPassword: string;
+  }) => Promise<{ status: string; message: string }>;
   logout: () => Promise<void>;
   initializeAuth: () => Promise<void>;
   clearError: () => void;
@@ -220,23 +226,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      // Check backend OAuth configuration
-      const providers = await apiClient.get<{ providers: Record<string, boolean> }>(
-        "/api/auth/oauth/providers",
-        { showToastOnError: false }
-      ).catch(() => null);
-
-      if (providers && providers.providers && providers.providers[provider]) {
-        if (typeof window !== "undefined") {
-          window.location.href = `${apiClient.getBaseUrl()}/api/auth/oauth/${provider}/start`;
-          return true;
-        }
+      if (typeof window !== "undefined") {
+        window.location.href = `${apiClient.getBaseUrl()}/api/auth/oauth/${provider}/start`;
+        return true;
       }
-
-      set({
-        isLoading: false,
-        error: `${provider.toUpperCase()} SSO provider is not configured on the backend. Please sign in with email/password.`,
-      });
       return false;
     } catch (err: any) {
       set({
@@ -244,6 +237,75 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         error: `${provider.toUpperCase()} authentication unavailable.`,
       });
       return false;
+    }
+  },
+
+  requestPasswordReset: async (email: string) => {
+    set({ isLoading: true, error: null });
+    const cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail) {
+      set({ isLoading: false, error: "SecOps email address is required." });
+      throw new Error("SecOps email address is required.");
+    }
+
+    try {
+      const response = await apiClient.post<{ status: string; message: string }>(
+        "/api/auth/password-reset/request",
+        { email: cleanEmail },
+        { showToastOnError: false }
+      );
+      set({ isLoading: false, error: null });
+      return response;
+    } catch (err: any) {
+      const errorMsg =
+        err instanceof ApiError
+          ? err.detail
+          : err?.message || "Password reset request failed.";
+      set({ isLoading: false, error: errorMsg });
+      throw new Error(errorMsg);
+    }
+  },
+
+  confirmPasswordReset: async ({ email, otp, newPassword }) => {
+    set({ isLoading: true, error: null });
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanOtp = otp.trim();
+
+    if (!cleanEmail) {
+      set({ isLoading: false, error: "SecOps email address is required." });
+      throw new Error("SecOps email address is required.");
+    }
+    if (!/^\d{6}$/.test(cleanOtp)) {
+      set({ isLoading: false, error: "Verification code must be exactly 6 digits." });
+      throw new Error("Verification code must be exactly 6 digits.");
+    }
+    if (!newPassword || newPassword.length < 8) {
+      set({
+        isLoading: false,
+        error: "New password must be at least 8 characters.",
+      });
+      throw new Error("New password must be at least 8 characters.");
+    }
+
+    try {
+      const response = await apiClient.post<{ status: string; message: string }>(
+        "/api/auth/password-reset/confirm",
+        {
+          email: cleanEmail,
+          otp: cleanOtp,
+          new_password: newPassword,
+        },
+        { showToastOnError: false }
+      );
+      set({ isLoading: false, error: null });
+      return response;
+    } catch (err: any) {
+      const errorMsg =
+        err instanceof ApiError
+          ? err.detail
+          : err?.message || "Password reset failed. The code may be invalid or expired.";
+      set({ isLoading: false, error: errorMsg });
+      throw new Error(errorMsg);
     }
   },
 
