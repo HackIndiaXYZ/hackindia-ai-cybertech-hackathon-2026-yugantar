@@ -1,5 +1,5 @@
 "use client";
-
+//ok
 import React, { useState, useEffect } from "react";
 import { Terminal, Shield, Cpu, FileText } from "lucide-react";
 import { useChatStore, LogStep } from "@/store/useChatStore";

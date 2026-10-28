@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/forgot-password") ||
     pathname.startsWith("/reset-password");
   const isApiAuthRoute = pathname.startsWith("/api/auth");
-
+//ok
   // Allow public API auth routes
   if (isApiAuthRoute) {
     return NextResponse.next();

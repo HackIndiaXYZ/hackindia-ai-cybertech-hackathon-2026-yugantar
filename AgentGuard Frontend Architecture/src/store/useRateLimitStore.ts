@@ -5,7 +5,7 @@ export const COOLDOWN_DURATION_SECONDS = 3; // Strict 3s cooldown
 export const SPAM_THRESHOLD_COUNT = 5; // Max 5 requests
 export const SPAM_WINDOW_MS = 60 * 1000; // Within 60 seconds
 export const LOCKOUT_DURATION_SECONDS = 15; // Lockout penalty duration
-
+//ok
 interface RateLimitState {
   isCooldownActive: boolean;
   cooldownRemaining: number;

@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { secureStorage } from "./secureStorage";
-
+//ok
 export class ApiError extends Error {
   statusCode: number;
   detail: string;

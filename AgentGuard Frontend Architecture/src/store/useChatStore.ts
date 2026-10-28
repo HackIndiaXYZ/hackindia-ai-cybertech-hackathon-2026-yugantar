@@ -5,7 +5,7 @@ import {
   clearUserHistory,
   createHistorySession,
 } from "@/services/api";
-
+//ok
 export type AnalysisMode = "deep_audit" | "quick_scan" | "policy_check";
 
 export interface LogStep {

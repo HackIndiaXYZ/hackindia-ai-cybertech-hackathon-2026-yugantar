@@ -6,7 +6,7 @@
  * 2. Caches authenticated user identity.
  * 3. Safely clears credentials upon logout.
  */
-
+//ok
 export interface AuthUser {
   id: string;
   email: string;

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { AnalysisMode, EvidenceData, useChatStore } from "@/store/useChatStore";
 import { sanitizeInput, validatePdfFileStrict, MAX_FILE_SIZE_BYTES } from "@/lib/sanitizer";
 import { apiClient, ApiError } from "@/lib/apiClient";
-
+//ok
 export const MAX_FILE_SIZE = MAX_FILE_SIZE_BYTES; // 10MB limit
 
 // Strict Zod schema for PDF file validation

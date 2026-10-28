@@ -2,7 +2,7 @@
  * AgentGuard Security Hardening & Input Sanitization
  * Client-Side XSS Defense, File Inspection & Payload Neutralization
  */
-
+//ok
 // Escape HTML characters to prevent XSS / raw HTML injection in DOM
 const HTML_ESCAPE_MAP: Record<string, string> = {
   "&": "&amp;",
