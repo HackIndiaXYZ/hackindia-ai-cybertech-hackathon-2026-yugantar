@@ -330,7 +330,7 @@ export const AgentMessage: React.FC<AgentMessageProps> = ({ message }) => {
               <span>Severity: {telemetry.severity}</span>
             </div>
 
-            {/* Confidence Badge */}
+            {/*confidence Badge */}
             {telemetry.confidenceScore && (
               <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-none border border-border bg-surface-subtle text-muted-foreground text-[10px]">
                 <Shield className="w-3 h-3 text-accent-emerald" />
