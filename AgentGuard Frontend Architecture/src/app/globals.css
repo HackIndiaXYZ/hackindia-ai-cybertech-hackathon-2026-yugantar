@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Polar Bear Frosty Clean Light Mode */
+    --background: #f4f6f8;        /* Main: Polar Ice White */
+    --foreground: #0f172a;        /* Primary Text: Deep Charcoal/Slate */
+    --border: #e2e8f0;            /* Borders: Icy Grey */
+    --surface: #ffffff;           /* Sidebar & Panels: Pure Snow White */
+    --surface-subtle: #f8fafc;    /* Cool Frosty Slate */
+    --surface-hover: #f1f5f9;     /* Cool Slate Hover */
+    --surface-active: #e2e8f0;    /* Icy Active */
+    --card: #ffffff;              /* Pure Snow White */
+    --card-foreground: #0f172a;
+    --muted: #f8fafc;
+    --muted-foreground: #475569;  /* Sharp readability slate-600 */
+    --muted-dim: #94a3b8;         /* Icy muted slate-400 */
+    --accent-emerald: #059669;    /* Clean cold emerald */
+    --accent-red: #dc2626;        /* Clean cold red */
+    --accent-amber: #d97706;      /* Clean cold amber */
+    --shadow-panel: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05);
+  }
+
+  .dark {
+    /* Industrial Zinc 950 Dark Mode */
+    --background: #09090b;        /* zinc-950 */
+    --foreground: #fafafa;        /* zinc-50 */
+    --border: #27272a;            /* zinc-800 */
+    --surface: #09090b;
+    --surface-subtle: #121215;
+    --surface-hover: #18181b;
+    --surface-active: #27272a;
+    --card: #09090b;
+    --card-foreground: #fafafa;
+    --muted: #18181b;
+    --muted-foreground: #a1a1aa;  /* zinc-400 */
+    --muted-dim: #71717a;         /* zinc-500 */
+    --accent-emerald: #10b981;
+    --accent-red: #ef4444;
+    --accent-amber: #f59e0b;
+    --shadow-panel: none;
+  }
+
+  * {
+    border-color: var(--border);
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Custom Scrollbar - Sleek Minimal Industrial */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #27272a transparent;
+}
+
+/* WebKit Input Autofill Override (Industrial Dark & Light Mode Sync) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #09090b inset !important;
+  box-shadow: 0 0 0 1000px #09090b inset !important;
+  -webkit-text-fill-color: #fafafa !important;
+  caret-color: #fafafa !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+html:not(.dark) input:-webkit-autofill,
+html:not(.dark) input:-webkit-autofill:hover,
+html:not(.dark) input:-webkit-autofill:focus,
+html:not(.dark) input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  caret-color: #0f172a !important;
+}
+
+/* Premium Frosted Glass Sonner Toast Overrides */
+[data-sonner-toast] {
+  background: rgba(9, 9, 11, 0.82) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(39, 39, 42, 0.95) !important;
+  color: #f4f4f5 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.55), 0 8px 10px -6px rgba(0, 0, 0, 0.55) !important;
+}
+
+[data-sonner-toast] [data-title] {
+  color: #fafafa !important;
+  font-family: var(--font-mono), "JetBrains Mono", monospace !important;
+  font-size: 12px !important;
+}
+
+[data-sonner-toast] [data-description] {
+  color: #a1a1aa !important;
+  font-family: var(--font-mono), "JetBrains Mono", monospace !important;
+  font-size: 11px !important;
+}
+
+/* Code block & Markdown Table Specific Styling */
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
+  font-size: 11px;
+}
+
+.audit-table th {
+  background-color: var(--surface-subtle);
+  color: var(--foreground);
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.audit-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.audit-table tr:hover td {
+  background-color: var(--surface-subtle);
+}

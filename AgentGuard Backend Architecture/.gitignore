@@ -1,0 +1,30 @@
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+
+# Python virtual environments and generated files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local runtime data
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+.agentguard_auth_secret
+agentguard_app.db
+agentguard_app.db-shm
+agentguard_app.db-wal

@@ -1,0 +1,76 @@
+# ============================================================
+# AgentGuard — Zero-Trust Security Policy
+# ============================================================
+#
+# Purpose:
+# - Define tool risk levels.
+# - Apply default-deny security.
+# - Restrict sensitive destinations.
+# - Configure policy decisions.
+#
+# Enforcement will be implemented in mcp_gateway.py.
+# This file alone does not execute or block any action.
+# ============================================================
+
+
+# ------------------------------------------------------------
+# 1. Tool Risk Classification
+# ------------------------------------------------------------
+
+tool_risk_levels:
+  export_customer_data: CRITICAL
+  send_email: HIGH
+  search_academic_db: LOW
+
+
+# ------------------------------------------------------------
+# 2. Default Security Behaviour
+# ------------------------------------------------------------
+
+defaults:
+  # Unknown tools are treated as critical risk.
+  unknown_tool_risk: CRITICAL
+
+  # Deny actions when no applicable policy allows them.
+  default_verdict: BLOCK
+
+  # Require additional review for bulk data operations.
+  bulk_record_threshold: 100
+
+
+# ------------------------------------------------------------
+# 3. Trusted Destination Allowlists
+# ------------------------------------------------------------
+
+destinations:
+  allowed_email_domains:
+    - org.com
+    - trusted-partner.org
+    - company.com
+
+  allowed_api_hosts:
+    - api.ncbi.nlm.nih.gov
+    - export.arxiv.org
+    - internal-db.company.com
+
+
+# ------------------------------------------------------------
+# 4. Policy Evaluation Outcomes
+# ------------------------------------------------------------
+
+evaluations:
+
+  # Untrusted context combined with high or critical risk.
+  untrusted_context_high_critical: BLOCK
+
+  # Untrusted context with medium risk.
+  untrusted_context_medium: REVIEW
+
+  # Low-risk untrusted context.
+  untrusted_context_low: ALLOW
+
+  # Critical action without untrusted provenance.
+  untainted_critical: REVIEW
+
+  # Explicitly allowlisted action with clean provenance.
+  untainted_allowlisted: ALLOW
